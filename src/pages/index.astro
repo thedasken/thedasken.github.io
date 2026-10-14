@@ -31,7 +31,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 			</section>
 			<section class="recent" aria-labelledby="recent-title">
 				<div class="section-heading"><div><p class="section-label">LE CARNET</p><h2 id="recent-title">Articles récents</h2></div><a class="all-link" href="/articles/">Tous les articles <svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></div>
-				{posts.length ? <ol class="post-list">{posts.slice(0, 5).map((post) => <li><a class="post-link" href={`/blog/${post.id}/`}><div class="post-meta"><FormattedDate date={post.data.pubDate} /></div><div class="post-copy"><h3>{post.data.title}</h3><p>{post.data.description}</p></div><svg class="post-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>)}</ol> : <p class="empty-state">Les premières expériences sont en préparation.</p>}
+				{posts.length ? <ol class="post-list">{posts.slice(0, 5).map((post) => <li><a class="post-link" href={`/blog/${post.id}/`}><div class="post-meta"><FormattedDate date={post.data.pubDate} /></div><div class="post-copy"><h3>{post.data.title}</h3><p>{post.data.description}</p></div><svg class="post-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>)}</ol> : <p class="empty-state">Les premières expériences sont en préparation...</p>}
 			</section>
 		</main>
 		<Footer />
