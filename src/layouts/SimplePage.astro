@@ -1,0 +1,23 @@
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+interface Props { title: string; description: string; }
+const { title, description } = Astro.props;
+---
+<!doctype html>
+<html lang="fr">
+	<head><BaseHead title={title} description={description} /></head>
+	<body>
+		<Header />
+		<main class="simple-page"><slot /></main>
+		<Footer />
+	</body>
+</html>
+<style>
+	.simple-page { max-width: 760px; min-height: 65vh; padding-top: 4rem; }
+	.section-label { margin: 0; color: var(--muted); font: 600 .72rem/1.4 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+	h1 { margin: .7rem 0 2rem; font-size: clamp(2.5rem, 6vw, 3.8rem); letter-spacing: -.06em; }
+	.prose { max-width: 660px; color: var(--muted); font-size: 1.08rem; line-height: 1.85; }
+	.prose p { margin: 0 0 1.35rem; }
+	@media (max-width: 600px) { .simple-page { padding-top: 2.5rem; } }
+</style>

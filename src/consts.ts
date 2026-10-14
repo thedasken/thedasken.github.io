@@ -1,5 +1,6 @@
-// Place any global data in this file.
-// You can import this data from anywhere in your site by using the `import` keyword.
-
-export const SITE_TITLE = 'Astro Blog';
-export const SITE_DESCRIPTION = 'Welcome to my website!';
+export const SITE_TITLE = 'Carnet d’ingénierie';
+export const SITE_DESCRIPTION =
+	'Expériences, notes et réflexions sur l’ingénierie logicielle, les systèmes et leurs compromis.';
+export const SITE_URL = 'https://blog.thedasken.com';
+export const GITHUB_URL = 'https://github.com/thedasken';
+export const LINKEDIN_URL = 'https://www.linkedin.com/in/clementfavarel/';
