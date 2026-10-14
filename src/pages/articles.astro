@@ -12,7 +12,7 @@ const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueO
 <html lang="fr">
 <head><BaseHead title={pageTitle} description={SITE_DESCRIPTION} /></head>
 <body><Header /><main class="archive"><header class="page-heading"><p class="section-label">LE CARNET</p><h1>Articles</h1><p>Expériences, analyses et notes sur les systèmes logiciels.</p></header>
-{posts.length ? <ol class="post-list">{posts.map((post) => <li><a href={`/blog/${post.id}/`}><time><FormattedDate date={post.data.pubDate} /></time><div><h2>{post.data.title}</h2><p>{post.data.description}</p></div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>)}</ol> : <p class="empty-state">Les premières expériences sont en préparation.</p>}
+{posts.length ? <ol class="post-list">{posts.map((post) => <li><a href={`/blog/${post.id}/`}><time><FormattedDate date={post.data.pubDate} /></time><div><h2>{post.data.title}</h2><p>{post.data.description}</p></div><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>)}</ol> : <p class="empty-state">Les premières expériences sont en préparation...</p>}
 </main><Footer /></body>
 </html>
 <style>
