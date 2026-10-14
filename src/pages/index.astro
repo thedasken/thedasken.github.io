@@ -1,59 +1,74 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
 import Header from '../components/Header.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+const siteTitle = SITE_TITLE;
+const siteDescription = SITE_DESCRIPTION;
+const posts = (await getCollection('blog')).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
-
 <!doctype html>
-<html lang="en">
-	<head>
-		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
-	</head>
+<html lang="fr">
+	<head><BaseHead title={siteTitle} description={siteDescription} /></head>
 	<body>
 		<Header />
-		<main>
-			<h1>🧑‍🚀 Hello, Astronaut!</h1>
-			<p>
-				Welcome to the official <a href="https://astro.build/">Astro</a> blog starter template. This
-				template serves as a lightweight, minimally-styled starting point for anyone looking to
-				build a personal website, blog, or portfolio with Astro.
-			</p>
-			<p>
-				This template comes with a few integrations already configured in your{' '}
-				<code>astro.config.mjs</code> file. You can customize your setup with{' '}
-				<a href="https://astro.build/integrations">Astro Integrations</a> to add tools like
-				Tailwind, React, or Vue to your project.
-			</p>
-			<p>Here are a few ideas on how to get started with the template:</p>
-			<ul>
-				<li>
-					Edit this page in <code>src/pages/index.astro</code>
-				</li>
-				<li>
-					Edit the site header items in <code>src/components/Header.astro</code>
-				</li>
-				<li>
-					Add your name to the footer in <code>src/components/Footer.astro</code>
-				</li>
-				<li>
-					Check out the included blog posts in <code>src/content/blog/</code>
-				</li>
-				<li>
-					Customize the blog post page layout in <code>src/layouts/BlogPost.astro</code>
-				</li>
-			</ul>
-			<p>
-				Have fun! If you get stuck, remember to{' '}
-				<a href="https://docs.astro.build/">read the docs</a> or{' '}
-				<a href="https://astro.build/chat">join us on Discord</a> to ask questions.
-			</p>
-			<p>
-				Looking for a blog template with a bit more personality? Check out{' '}
-				<a href="https://github.com/Charca/astro-blog-template">astro-blog-template</a> by{' '}
-				<a href="https://twitter.com/Charca">Maxi Ferreira</a>.
-			</p>
+		<main class="home">
+			<section class="intro" aria-labelledby="intro-title">
+				<h1 id="intro-title">Comprendre les systèmes en les mettant à l’épreuve.</h1>
+				<p class="lead">Un carnet d’expériences sur l’ingénierie logicielle, l’architecture et l’infrastructure. Je construis, mesure et compare pour comprendre ce que les choix techniques changent réellement.</p>
+			</section>
+			<section class="method" aria-label="Méthode d’expérimentation">
+				<div class="method-heading"><h2>Ma méthode</h2><p>Une question, puis une expérience pour y répondre.</p></div>
+				<ol class="method-line">
+					<li><span class="method-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8.5 9a3.5 3.5 0 1 1 5.9 2.5c-1.1 1-2.4 1.5-2.4 3"/><path d="M12 18h.01M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20Z"/></svg></span><span>Question</span><svg class="step-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></li>
+					<li><span class="method-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H20v18H7.5A2.5 2.5 0 0 0 5 22V4.5Z"/><path d="M5 5v17M9 6h7M9 10h7M9 14h5"/></svg></span><span>Hypothèse</span><svg class="step-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></li>
+					<li><span class="method-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M8 9h3M8 12h6"/></svg></span><span>Expérience</span><svg class="step-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></li>
+					<li><span class="method-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12s3.6-6 10-6 10 6 10 6-3.6 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="2.5"/></svg></span><span>Observations</span><svg class="step-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></li>
+					<li><span class="method-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19.5 6.8"/></svg></span><span>Conclusion</span></li>
+				</ol>
+			</section>
+			<section class="recent" aria-labelledby="recent-title">
+				<div class="section-heading"><div><p class="section-label">LE CARNET</p><h2 id="recent-title">Articles récents</h2></div><a class="all-link" href="/articles/">Tous les articles <svg class="link-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></div>
+				{posts.length ? <ol class="post-list">{posts.slice(0, 5).map((post) => <li><a class="post-link" href={`/blog/${post.id}/`}><div class="post-meta"><FormattedDate date={post.data.pubDate} /></div><div class="post-copy"><h3>{post.data.title}</h3><p>{post.data.description}</p></div><svg class="post-arrow" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9" /></svg></a></li>)}</ol> : <p class="empty-state">Les premières expériences sont en préparation.</p>}
+			</section>
 		</main>
 		<Footer />
 	</body>
 </html>
+<style>
+	.home { max-width: 860px; }
+	.intro { padding: 3.6rem 0 3.3rem; }
+	.eyebrow, .section-label { margin: 0; color: var(--muted); font: 600 .72rem/1.4 var(--font-mono); letter-spacing: .09em; text-transform: uppercase; }
+	.eyebrow { display: flex; align-items: center; gap: .65rem; }
+	.status-mark { width: .48rem; height: .48rem; flex: none; background: var(--accent); border-radius: 50%; }
+	h1 { max-width: 860px; margin: 1.5rem 0 1.1rem; font-size: clamp(2.4rem, 5.3vw, 4.15rem); font-weight: 550; letter-spacing: -.055em; line-height: 1.08; text-wrap: balance; }
+	.lead { max-width: 620px; margin: 0; color: var(--muted); font-size: 1.18rem; line-height: 1.75; }
+	.method { padding: 1.25rem 0 1.4rem; border-block: 1px solid var(--line); }
+	.method-heading { display: flex; align-items: baseline; gap: 1rem; }
+	.method-heading h2 { margin: 0; color: var(--ink); font-size: 1.05rem; font-weight: 650; letter-spacing: -.02em; }
+	.method-heading > p:last-child { margin: 0; color: var(--muted); font-size: .92rem; }
+	.method-line { display: flex; align-items: stretch; gap: .65rem; margin: .85rem 0 0; padding: 0; list-style: none; }
+	.method-line li { position: relative; display: flex; flex: 1; align-items: center; gap: .55rem; min-width: 0; padding: .65rem .7rem; border: 1px solid var(--line); border-radius: 5px; background: #fff; font: 500 .79rem/1.35 var(--font-mono); white-space: nowrap; }
+	.method-line li:not(:last-child)::after { position: absolute; top: 50%; right: -.62rem; z-index: 1; padding: 0 .08rem; background: var(--paper); color: var(--accent); content: '›'; transform: translateY(-50%); }
+	.method-icon { display: grid; width: 1.65rem; height: 1.65rem; flex: none; place-items: center; border-radius: 50%; background: #edf2ec; color: var(--accent); }
+	.method-icon svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
+	.method-line .step-arrow { position: absolute; top: 50%; right: -.7rem; z-index: 2; width: .8rem; height: .8rem; padding: .05rem; background: var(--paper); color: var(--accent); fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; transform: translateY(-50%); }
+	.recent { padding: 3.5rem 0 2rem; }
+	.section-heading { display: flex; justify-content: space-between; align-items: end; margin-bottom: 1.25rem; }
+	.section-heading h2 { margin: .35rem 0 0; font-size: 1.75rem; letter-spacing: -.04em; }
+	.all-link { color: var(--muted); font-size: .85rem; text-decoration: none; }
+	.link-arrow { display: inline-block; width: .9rem; height: .9rem; margin-left: .15rem; vertical-align: -.12rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+	.all-link:hover { color: var(--accent); }
+	.post-list { margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--line); }
+	.post-list li { border-bottom: 1px solid var(--line); }
+	.post-link { display: grid; grid-template-columns: 120px 1fr 20px; align-items: start; gap: 1rem; padding: 1.25rem 0; color: inherit; text-decoration: none; }
+	.post-meta { padding-top: .32rem; color: var(--muted); font: .75rem/1.5 var(--font-mono); }
+	.post-copy h3 { margin: 0; font-size: 1.2rem; font-weight: 550; letter-spacing: -.025em; }
+	.post-copy p { margin: .28rem 0 0; color: var(--muted); font-size: .93rem; }
+	.post-arrow { width: 1rem; height: 1rem; padding-top: .1rem; color: var(--muted); fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.8; }
+	.post-link:hover h3, .post-link:hover .post-arrow { color: var(--accent); }
+	.empty-state { margin: 0; padding: 1.5rem 0; color: var(--muted); }
+	@media (max-width: 600px) { .intro { padding: 2.6rem 0 2.5rem; } .lead { font-size: 1.05rem; } .method { padding: 1rem 0; } .method-heading { display: block; } .method-heading > p:last-child { margin-top: .2rem; font-size: .88rem; } .method-line { display: grid; grid-template-columns: 1fr; gap: .45rem; margin-top: .8rem; } .method-line li { min-height: 3rem; padding: .55rem .7rem; font-size: .84rem; } .method-line .step-arrow { top: auto; right: .8rem; bottom: -.62rem; width: .8rem; height: .8rem; transform: rotate(90deg); } .method-icon { width: 1.8rem; height: 1.8rem; } .method-icon svg { width: 1.05rem; height: 1.05rem; } .post-link { grid-template-columns: 1fr 18px; gap: .2rem .8rem; } .post-meta { grid-column: 1; grid-row: 1; } .post-copy { grid-column: 1; grid-row: 2; } .post-arrow { grid-column: 2; grid-row: 1 / span 2; align-self: center; } }
+</style>
